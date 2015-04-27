@@ -1,0 +1,20 @@
+{
+  "name": "BattleFyTest",
+  "description": "Test project",
+  "version": "0.0.1",
+  "author": "Leo Wang",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DukeCabbage/candy"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.12.3",
+    "morgan": "^1.5.2"
+  }
+}
