@@ -1,14 +1,6 @@
-/* browserify task
-   ---------------
-   Bundle javascripty things with browserify!
-
-   If the watch task is running, this uses watchify instead
-   of browserify for faster bundling using caching.
-*/
-
-var browserify   = require('browserify');
-var watchify     = require('watchify');
 var gulp         = require('gulp');
+var browserify   = require('browserify');
+var browserifyHandlebars = require('browserify-handlebars');
 var handleErrors = require('./util/handleErrors');
 var source       = require('vinyl-source-stream');
 
@@ -17,10 +9,10 @@ var source       = require('vinyl-source-stream');
 var createBrowserifyTask = function(entryPoints, destFile) {
     return (function() {
         var bundler = browserify({
-            // Required watchify args
-            cache: {}, packageCache: {}, fullPaths: true,
             // Specify the entry point of your app
             entries: entryPoints,
+            // Compiling .handlebars templates
+            transform: [browserifyHandlebars],
             // Add file extentions to make optional in your requires
             // extensions: ['.coffee', '.hbs'],
             // Enable source maps:
@@ -28,7 +20,7 @@ var createBrowserifyTask = function(entryPoints, destFile) {
         });
 
         var bundle = function() {
-            var bundleLogger = require('../util/bundleLogger');
+            var bundleLogger = require('./util/bundleLogger');
             // Log when bundling starts
             bundleLogger.start();
 
@@ -46,11 +38,6 @@ var createBrowserifyTask = function(entryPoints, destFile) {
               .on('end', bundleLogger.end);
         };
 
-        if(global.isWatching) {
-            bundler = watchify(bundler);
-            // Rebundle with watchify on changes.
-            bundler.on('update', bundle);
-        }
 
         return bundle();
     });
@@ -58,4 +45,4 @@ var createBrowserifyTask = function(entryPoints, destFile) {
 
 gulp.task('browserify_basicInfo',
         createBrowserifyTask('./client/basicInfo/main.js', 'bundle_basicInfo.js'));
-gulp.task('browserify', [browserify_basicInfo]);
+gulp.task('browserify', ['browserify_basicInfo']);

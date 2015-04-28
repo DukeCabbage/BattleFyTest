@@ -7,7 +7,7 @@ var Marionette  = require('backbone.marionette');
 var Controller  = require('./controller');
 var Router      = require('./router');
 
-var model = require('./models/basicInfoModel');
+var BasicInfoModel = require('./models/basicInfoModel');
 
 module.exports = App = function App() {};
 
@@ -20,7 +20,7 @@ App.prototype.start = function(){
         App.views = {};
         App.data = {};
         
-        App.data.model = new model();
+        App.data.model = new BasicInfoModel();
         App.core.vent.trigger('app:start');
     });
 

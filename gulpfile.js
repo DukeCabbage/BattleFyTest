@@ -20,5 +20,5 @@ gulp.task('jshint', function() {
 // Main task sequence
 
 gulp.task('dev', function() {
-  runSequence('copy');
+  runSequence('browserify', 'copy');
 });

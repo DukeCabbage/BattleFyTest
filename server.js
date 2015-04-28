@@ -1,10 +1,9 @@
 var express = require('express');
-var http = require('http');
+// var http = require('http');
 var path = require('path');
 var logger = require('morgan');
 var request = require("request");
-var exphbs = require('express3-handlebars');
-var mongoose = require('mongoose');
+// var exphbs = require('express3-handlebars');
 
 var app = express();
 
@@ -19,16 +18,10 @@ var id;
 var name;
 var level;
 
+app.set('port', port);
 app.set('views', __dirname + '/views');
-
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(app.router);
+app.use(logger('dev'));
+// app.use(app.router);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public'))); 
@@ -66,7 +59,7 @@ function handleInfo(body){
 }
 
 //routes list:
-routes.initialize(app);
+// routes.initialize(app);
 
 app.listen(port, domain);
 console.log('Server up: http://'+domain+':'+app.get('port'));

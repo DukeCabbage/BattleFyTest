@@ -2,10 +2,9 @@ var $ = jQuery 	= require('jquery');
 var _			= require('underscore');
 var Backbone 	= require('backbone');
 Backbone.$ 		= $;
-var Marionette 	= require('backbone.marionette'),
-	Handlebars 		= require('hbsfy/runtime');
+var Marionette 	= require('backbone.marionette');
 	
-var mainTemplate 	= require("../../templates/indexPage.hbs");
+var indexPage 	= require("../../templates/indexPage.hbs");
 
 module.exports = ChooseQuantityView = Marionette.ItemView.extend({
  
@@ -20,7 +19,7 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
     },
 	
 	render: function(){
-		var renderHTML = mainTemplate();
+		var renderHTML = indexPage();
 		$(this.el).html(renderHTML);
 	}
 });
