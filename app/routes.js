@@ -10,4 +10,6 @@ router.get('/basicInfo', function(req, res) {
     res.render('basicInfo');
 });
 
+
+
 module.exports = router;
