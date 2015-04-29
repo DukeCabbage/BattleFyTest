@@ -1,9 +1,11 @@
 var express = require('express');
-// var http = require('http');
 var path = require('path');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
 var request = require("request");
-// var exphbs = require('express3-handlebars');
+var exphbs = require('express3-handlebars');
+
+var routes = require('./app/routes');
 
 var app = express();
 
@@ -19,12 +21,54 @@ var name;
 var level;
 
 app.set('port', port);
-app.set('views', __dirname + '/views');
 app.use(logger('dev'));
-// app.use(app.router);
-
-// Serve static files
 app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(favicon(path.join(__dirname, 'public/img/favicon.ico')));
+
+// view engine setup
+app.set('views', __dirname + '/views');
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+app.use('/', routes);
+
+app.listen(port, domain);
+console.log('Server up: http://'+domain+':'+app.get('port'));
+console.log('Listening...');
+
+/// catch 404 and forwarding to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
+//===================================================
+// TODO: MOVE TO SEPARATE ROUTE
 
 // NEW: Handle requests for a player
 app.get('/players/:name', function(req, res){
@@ -57,11 +101,3 @@ function handleInfo(body){
 	level = playerInfo[key]['summonerLevel'];
 	console.log(id);
 }
-
-//routes list:
-// routes.initialize(app);
-
-app.listen(port, domain);
-console.log('Server up: http://'+domain+':'+app.get('port'));
-console.log('Listening...');
-

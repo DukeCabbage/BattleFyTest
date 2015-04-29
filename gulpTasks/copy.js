@@ -8,6 +8,14 @@ gulp.task('copy:html', function(){
   .pipe(gulp.dest('public'));
 });
 
+gulp.task('copy:img', function(){
+  return gulp.src([
+		'images/*.png',
+		'images/favicon.ico'
+	])
+  .pipe(gulp.dest('public/img'));
+});
+
 gulp.task('copy:js', function(){
   return gulp.src([
     'build/*.js'
@@ -17,5 +25,5 @@ gulp.task('copy:js', function(){
 
 
 gulp.task('copy', function() {
-  runSequence('clean:public', ['copy:html', 'copy:js']);
+  runSequence('clean:public', ['copy:img', 'copy:js']);
 });
