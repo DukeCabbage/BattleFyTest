@@ -14,7 +14,7 @@ var findCallback = function(items, res){
         res.writeHead(404);
         res.end('User not found');
     }else{
-        res.writeHead(404);
+        res.writeHead(200);
         res.end(items[0]['email']);
         console.log(items[0]['email']);
     }
