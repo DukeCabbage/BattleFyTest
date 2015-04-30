@@ -23,6 +23,7 @@
     "express3-handlebars": "^0.5.2",
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.10.0",
+    "gulp-less": "^3.0.3",
     "gulp-notify": "^2.2.0",
     "gulp-util": "^3.0.4",
     "handlebars": "^3.0.2",

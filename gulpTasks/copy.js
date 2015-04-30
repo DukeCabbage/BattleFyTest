@@ -16,6 +16,13 @@ gulp.task('copy:img', function(){
   .pipe(gulp.dest('public/img'));
 });
 
+gulp.task('copy:css', function() {
+  return gulp.src([
+    'build/*.css'
+  ])
+  .pipe(gulp.dest('public/css'));
+});
+
 gulp.task('copy:js', function(){
   return gulp.src([
     'build/*.js'
@@ -25,5 +32,5 @@ gulp.task('copy:js', function(){
 
 
 gulp.task('copy', function() {
-  runSequence('clean:public', ['copy:img', 'copy:js']);
+  runSequence('clean:public', ['copy:img', 'copy:css', 'copy:js']);
 });

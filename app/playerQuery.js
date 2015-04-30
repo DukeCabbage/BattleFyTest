@@ -22,7 +22,7 @@ var findCallback = function(items, res, value){
     }else{
         res.writeHead(200);
         res.end(JSON.stringify(items[0]));
-        console.log('player already in db:' + items[0]);
+        console.log('player already in db:');
     }
 }
 
@@ -36,9 +36,10 @@ var requestToLolDatabase = function(name, res) {
 			var playerInfo = JSON.parse(body);
 			var key = Object.keys(playerInfo)[0];
 			var playerObj = {
+				summonerId : playerInfo[key]['id'],
 				name : playerInfo[key]['name'],
-				level : playerInfo[key]['summonerLevel'],
-				update: playerInfo[key]['revisionDate']
+				summonerLevel : playerInfo[key]['summonerLevel'],
+				revisionDate: playerInfo[key]['revisionDate']
 			}
 
 			playerInfoDB.insert(playerObj, function(){
