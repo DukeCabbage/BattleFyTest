@@ -1,45 +1,51 @@
 var express = require('express');
 var router = express.Router();
 var request = require("request");
+var playerInfoDB = require('./playerInfoDB');
 
 var apiKey = '?api_key=d188a667-b0ca-4c80-9110-8bfcbbf6d82b';
 var requestStr = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/';
 
-var playerInfo;
-var id;
-var name;
-var level;
-
 // NEW: Handle requests for a player
 router.get('/:name', function(req, res){
 	var name = req.params.name;
+
+	playerInfoDB.find('name', name, findCallback, res);
+	
+
+});
+
+var findCallback = function(items, res, value){
+    if (items.length == 0){
+        requestToLolDatabase(value, res);
+    }else{
+        res.writeHead(404);
+        res.end(items[0]);
+        console.log('player already in db:' + items[0]);
+    }
+}
+
+var requestToLolDatabase = function(name, res) {
 	var requestUrl = requestStr+name+apiKey;
 	console.log('Sending request: ' + requestUrl);
 
 	request(requestUrl, function(error, response, body){
 		if (!error && response.statusCode == 200) {
-			handleInfo(body);
+			var playerInfo = JSON.parse(body);
+			var key = Object.keys(playerInfo)[0];
+			var playerObj = {
+				name : playerInfo[key]['name'],
+				level : playerInfo[key]['summonerLevel'],
+				update: playerInfo[key]['revisionDate']
+			}
 
-			res.writeHead(200, {"Content-Type": "text/json"});
-			res.write('id: ' + id + '\n');
-			res.write('name: '+name + '\n');
-			res.write('level: '+level + '\n');
-			res.end();
+			res.writeHead(200);
+			res.end(JSON.stringify(playerObj));
 		}else{
 			res.writeHead(response.statusCode, {"Content-Type": "text/text"});
 			res.end(error);
 		}
 	});
-});
-
-function handleInfo(body){
-	console.log('what');
-	playerInfo = JSON.parse(body);
-	var key = Object.keys(playerInfo)[0];
-	id = playerInfo[key]['id'];
-	name = playerInfo[key]['name'];
-	level = playerInfo[key]['summonerLevel'];
-	console.log(id);
 }
 
 module.exports = router;

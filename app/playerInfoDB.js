@@ -6,7 +6,7 @@ exports.find = function(key, value, callback, res) {
 	obj[key] = value;
 	
 	collection.find(obj, function(err, items){
-		callback(items, res);
+		callback(items, res, value);
 	});
 	
 };
