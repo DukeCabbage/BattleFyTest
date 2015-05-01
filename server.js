@@ -9,22 +9,22 @@ var app = express();
 var port = 8080;
 var domain = 'localhost';
 
-var findCallback = function(items, res){
-    if (items.length == 0){
-        res.writeHead(404);
-        res.end('User not found');
-    }else{
-        res.writeHead(200);
-        res.end(items[0]['email']);
-        console.log(items[0]['email']);
-    }
-}
+// var findCallback = function(items, res){
+//     if (items.length == 0){
+//         res.writeHead(404);
+//         res.end('User not found');
+//     }else{
+//         res.writeHead(200);
+//         res.end(items[0]['email']);
+//         console.log(items[0]['email']);
+//     }
+// }
 
-var playerInfoDB = require('./app/playerInfoDB');
+// var playerInfoDB = require('./app/playerInfoDB');
 
-app.get('/user/:name', function(req, res){
-    playerInfoDB.find('username', req.params.name, findCallback, res);
-});
+// app.get('/user/:name', function(req, res){
+//     playerInfoDB.find('username', req.params.name, findCallback, res);
+// });
 
 
 app.set('port', port);

@@ -5,6 +5,7 @@ Backbone.$ 		= $;
 var Marionette 	= require('backbone.marionette');
 	
 var indexPage 	= require("../../templates/indexPage.hbs");
+var errorPage	= require("../../templates/errorPage.hbs");
 
 module.exports = ChooseQuantityView = Marionette.ItemView.extend({
  
@@ -20,6 +21,7 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
 	
 	render: function(){
 		var renderHTML = indexPage();
+		renderHTML += errorPage();
 		$(this.el).html(renderHTML);
 	}
 });
