@@ -4,11 +4,10 @@ var rootUrl = "http://localhost:8080";
 exports.rootUrl = rootUrl;
 
 exports.submitInquiry = function(name, callback) {
-	$.ajax(rootUrl+"/player"+name, {
+	$.ajax(rootUrl+"/player/"+name, {
 		success: callback,
-		timeout: 10*1000;
-		type: 'GET'
-	}).fail(function(){
-		callback(null);
-	})
+		timeout: 10*1000,
+		type: 'GET',
+		error: callback
+	});
 }
