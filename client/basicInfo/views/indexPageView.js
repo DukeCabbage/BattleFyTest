@@ -20,7 +20,7 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
 	
     events: {
     	'click #submitInquiryBtn' : 'submitInquiry',
-    	'click #backBtn' : 'render'
+    	'click #backBtn' : 'backBtnClick'
     },
 
     submitInquiry: function(){
@@ -37,13 +37,22 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
     			$(_scope.el).html(renderHTML);
     			alert(msg.status+" "+msg.statusText);
     		}else{
-    			alert(msg);
+                // console.log(msg);
+                _scope.model.parseMessage(msg);
+                _scope.render();
     		}
     	});
     },
+
+    backBtnClick: function(){
+        this.model.resetAll();
+        this.render();
+    },
 	
 	render: function(){
-		var renderHTML = indexPage();
+        // this.model.printAttribute();
+        var data = this.model.toJSON();
+		var renderHTML = indexPage(data);
 		$(this.el).html(renderHTML);
 	}
 });
