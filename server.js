@@ -24,7 +24,7 @@ app.set('view engine', 'handlebars');
 // routes for serving pages and handling searches
 app.use('/', require('./app/routes'));
 app.use('/staticInfo', require('./app/staticInfoQuery'));
-// app.use('/recentGames', require('./app/recentGames'));
+app.use('/recentGames', require('./app/recentGames'));
 
 app.get('/test/:name', function(req, res) {
     var apiKey = '?api_key=d188a667-b0ca-4c80-9110-8bfcbbf6d82b';

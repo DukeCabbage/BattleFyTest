@@ -7,8 +7,8 @@ var apiKey = '?api_key=d188a667-b0ca-4c80-9110-8bfcbbf6d82b';
 
 router.get('/summonerName/:name', function(req, res){
 	console.log('summonerName');
-	var name = req.params.name.toUpperCase();
-	staticInfoDB.findSummoner('summonerName', name, 
+	var name = req.params.name.toLowerCase();
+	staticInfoDB.findSummoner('nameKey', name, 
 		function(items){
 		    if (items.length == 0){
 		    	console.log('no matching summoner name in db');
@@ -93,6 +93,7 @@ var requestForSummoner = function(method, value, res) {
 			var playerInfo = JSON.parse(body);
 			var key = Object.keys(playerInfo)[0];
 			var playerObj = {
+				nameKey : key.toLowerCase(),
 				summonerId : playerInfo[key]['id'],
 				summonerName : playerInfo[key]['name'],
 				profileIconId : playerInfo[key]['profileIconId'],
