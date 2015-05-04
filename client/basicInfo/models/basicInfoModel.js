@@ -2,7 +2,7 @@ var $           = require('jquery');
 var Backbone    = require('backbone');
 Backbone.$      = $;
 
-module.exports = Registration = Backbone.Model.extend({
+module.exports = BasicInfo = Backbone.Model.extend({
 
     defaults: {
     	databaseId : '',
@@ -12,8 +12,7 @@ module.exports = Registration = Backbone.Model.extend({
     	profileIconId : undefined
     },
 
-    parseMessage : function(msg){
-    	var obj = JSON.parse(msg);
+    parseMessage : function(obj){
     	this.set('databaseId', obj['_id']);
     	this.set('summonerName', obj['summonerName']);
     	this.set('summonerId', obj['summonerId']);
@@ -22,11 +21,11 @@ module.exports = Registration = Backbone.Model.extend({
     },
 
     printAttribute: function(){
-        console.log("databaseId:" + this.databaseId);
-        console.log("summonerName:" + this.summonerName);
-        console.log("summonerId:" + this.summonerId);
-        console.log("summonerLevel:" + this.summonerLevel);
-        console.log("profileIconId:" + this.profileIconId);
+        console.log("databaseId:" + this.get('databaseId'));
+        console.log("summonerName:" + this.get('summonerName'));
+        console.log("summonerId:" + this.get('summonerId'));
+        console.log("summonerLevel:" + this.get('summonerLevel'));
+        console.log("profileIconId:" + this.get('profileIconId'));
     },
 
     resetAll: function(){

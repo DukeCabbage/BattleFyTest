@@ -15,7 +15,7 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
  
     initialize: function() {
 		_.bindAll(this, "render");
-		this.model.on('change', this.render);
+		// this.model.on('change', this.render);
 	},
 	
     events: {
@@ -31,14 +31,14 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
     	}
 
     	var _scope = this;
-    	server.submitInquiry(name, function(msg, status){
+    	server.submitInquiry(name, function(res, status){
     		if (status=='error'){
     			var renderHTML = errorPage();
     			$(_scope.el).html(renderHTML);
-    			alert(msg.status+" "+msg.statusText);
+    			alert(res.status+" "+res.statusText);
     		}else{
-                // console.log(msg);
-                _scope.model.parseMessage(msg);
+                console.log(res);
+                _scope.model.parseMessage(res);
                 _scope.render();
     		}
     	});
@@ -50,7 +50,7 @@ module.exports = ChooseQuantityView = Marionette.ItemView.extend({
     },
 	
 	render: function(){
-        // this.model.printAttribute();
+        this.model.printAttribute();
         var data = this.model.toJSON();
 		var renderHTML = indexPage(data);
 		$(this.el).html(renderHTML);

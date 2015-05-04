@@ -15,8 +15,7 @@ router.get('/summonerName/:name', function(req, res){
 		        requestForSummoner('name', name, res);
 		    }else{
 		        console.log('summoner already in db:');
-		    	res.writeHead(200);
-		        res.end(JSON.stringify(items[0]));
+		    	res.send(items[0]);
 		    }
 		}
 	);
@@ -32,8 +31,7 @@ router.get('/summonerId/:id', function(req, res){
 		        requestForSummoner('id', id, res);
 		    }else{
 		        console.log('summoner already in db:');
-		    	res.writeHead(200);
-		        res.end(JSON.stringify(items[0]));
+		    	res.send(items[0]);
 		    }
 		}
 	);
@@ -48,8 +46,7 @@ router.get('/championName/:name', function(req, res){
 		        requestForChampion('name', '', res);
 		    }else{
 		        console.log('champion already in db:');
-		    	res.writeHead(200);
-		        res.end(JSON.stringify(items[0]));
+		    	res.send(items[0]);
 		    }
 		}
 	);
@@ -64,8 +61,7 @@ router.get('/championId/:id', function(req, res){
 		    	requestForChampion('id', id, res);
 		    }else{
 		        console.log('champion already in db:');
-		    	res.writeHead(200);
-		        res.end(JSON.stringify(items[0]));
+		    	res.send(items[0]);
 		    }
 		}
 	);
@@ -99,14 +95,15 @@ var requestForSummoner = function(method, value, res) {
 				profileIconId : playerInfo[key]['profileIconId'],
 				summonerLevel : playerInfo[key]['summonerLevel'],
 				revisionDate: playerInfo[key]['revisionDate']
-			}
+			};
 
 			staticInfoDB.insertSummoner(playerObj, function(){
 				console.log('Insertion success');
 			});
 
-			res.writeHead(200);
-			res.end(JSON.stringify(playerObj));
+			// res.writeHead(200);
+			// res.end(JSON.stringify(playerObj));
+			res.send(playerObj);
 		}else{
 			res.writeHead(response.statusCode, {"Content-Type": "text/text"});
 			res.end('No summoner found');
