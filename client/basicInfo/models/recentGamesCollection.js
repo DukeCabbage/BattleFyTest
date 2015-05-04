@@ -7,5 +7,11 @@ module.exports = RecentGames = Backbone.Collection.extend({
 });
 
 var Game = Backbone.Model.extend({
-	
+	defaults: {
+		championName: '',
+		fellowPlayers: '',
+		totalDamageDealtToChampions: undefined,
+		totalDamageTaken: undefined,
+		killingSprees: undefined
+	},
 });
