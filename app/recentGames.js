@@ -74,7 +74,7 @@ var syncLoop = function(count, res, array, rawData){
 			    		function(championObj){
 			        		if (championObj == null){
 			        			tempGame['championName'] = 'Unknown';
-			        			console.log(tempGame);
+			        			// console.log(tempGame);
 			        			array.push(tempGame);
 			        			count--;
 			        			syncLoop(count, res, array, rawData);
@@ -83,7 +83,7 @@ var syncLoop = function(count, res, array, rawData){
 									console.log('Insertion success');
 								});
 			        			tempGame['championName'] = championObj['championName'];
-			        			console.log(tempGame);
+			        			// console.log(tempGame);
 			        			array.push(tempGame);
 			        			count--;
 			        			syncLoop(count, res, array, rawData);
@@ -91,7 +91,7 @@ var syncLoop = function(count, res, array, rawData){
 			        	}
 			        );
 			    }else{
-			        console.log('champion already in db:');
+			        // console.log('champion already in db:');
 			    	tempGame['championName'] = (items[0])['championName'];
 			    	// console.log(tempGame);
 			    	array.push(tempGame);
