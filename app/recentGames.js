@@ -60,6 +60,7 @@ var syncLoop = function(count, res, array, rawData){
 		var game = rawData[totalCount-count];
 		var tempGame = {
 			gameId: game['gameId'],
+			createDate: game['createDate'],
 			totalDamageDealtToChampions: (game['stats'])['totalDamageDealtToChampions'],
 			totalDamageTaken: (game['stats'])['totalDamageTaken'],
 			killingSprees: (game['stats'])['killingSprees']
@@ -92,7 +93,7 @@ var syncLoop = function(count, res, array, rawData){
 			    }else{
 			        console.log('champion already in db:');
 			    	tempGame['championName'] = (items[0])['championName'];
-			    	console.log(tempGame);
+			    	// console.log(tempGame);
 			    	array.push(tempGame);
         			count--;
         			syncLoop(count, res, array, rawData);

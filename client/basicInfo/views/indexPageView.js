@@ -9,50 +9,62 @@ var server 		=require('../serverCommunication');
 var indexPage 	= require("../../templates/indexPage.hbs");
 var errorPage	= require("../../templates/errorPage.hbs");
 
-module.exports = ChooseQuantityView = Marionette.ItemView.extend({
+module.exports = Marionette.ItemView.extend({
  
 	el: '#mainPanel',
  
     initialize: function() {
-		_.bindAll(this, "render");
-		// this.model.on('change', this.render);
+		_.bindAll(this, "render", "searchPlayer", "searchRecentGames");
 	},
 	
     events: {
-    	'click #submitInquiryBtn' : 'submitInquiry',
-    	'click #backBtn' : 'backBtnClick'
+    	'click #submitInquiryBtn' : 'searchPlayer',
+        'click #recentGamesBtn' : 'searchRecentGames',
+    	'click #backBtn' : 'render'
     },
 
-    submitInquiry: function(){
+    searchPlayer: function(){
     	var name = $(this.el).find("#inputPlayerName").val();
     	if (name==''){
     		alert('Please enter a name');
     		return;
     	}
 
-    	var _scope = this;
-    	server.submitInquiry(name, function(res, status){
+    	server.submitBasicInquiry(name, function(res, status){
     		if (status=='error'){
     			var renderHTML = errorPage();
-    			$(_scope.el).html(renderHTML);
-    			alert(res.status+" "+res.statusText);
+    			$(this.el).html(renderHTML);
+    			// alert(res.status+" "+res.statusText);
     		}else{
                 console.log(res);
-                _scope.model.parseMessage(res);
-                _scope.render();
+                window.App.data.model.parseResponse(res);
+                window.App.controller.basicInfo();
     		}
     	});
     },
 
-    backBtnClick: function(){
-        this.model.resetAll();
-        this.render();
+    searchRecentGames: function(){
+        var name = $(this.el).find("#inputPlayerName").val();
+        if (name==''){
+            alert('Please enter a name');
+            return;
+        }
+
+        server.submitRecentGamesInquiry(name, function(res, status){
+            if (status=='error'){
+                var renderHTML = errorPage();
+                $(this.el).html(renderHTML);
+                // alert(res.status+" "+res.statusText);
+            }else{
+                // console.log(res);
+                window.App.data.collection.parseResponse(res);
+                window.App.controller.recentGames();
+            }
+        });
     },
 	
 	render: function(){
-        this.model.printAttribute();
-        var data = this.model.toJSON();
-		var renderHTML = indexPage(data);
+		var renderHTML = indexPage();
 		$(this.el).html(renderHTML);
 	}
 });

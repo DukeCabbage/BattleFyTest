@@ -5,6 +5,8 @@ Backbone.$      = $;
 var Marionette  = require('backbone.marionette');
 
 var indexPageView = require('./views/indexPageView');
+var basicInfoView = require('./views/basicInfoView');
+var recentGamesView = require('./views/recentGamesView');
 
 module.exports = Controller = Marionette.Controller.extend({
     initialize: function() {
@@ -14,7 +16,21 @@ module.exports = Controller = Marionette.Controller.extend({
     indexPage: function() {
         App.core.vent.trigger('app:log', 'Controller: "indexPage" route hit.');
         this.destroyCurrentView();
-        var view = new indexPageView({ model: window.App.data.model });
+        var view = new indexPageView();
+        this.renderView(view);
+    },
+
+    basicInfo: function() {
+        App.core.vent.trigger('app:log', 'Controller: "basicInfo" route hit.');
+        this.destroyCurrentView();
+        var view = new basicInfoView({ model: window.App.data.model });
+        this.renderView(view);
+    },
+
+    recentGames: function() {
+        App.core.vent.trigger('app:log', 'Controller: "recentGames" route hit.');
+        this.destroyCurrentView();
+        var view = new recentGamesView({ collection: window.App.data.collection });
         this.renderView(view);
     },
 

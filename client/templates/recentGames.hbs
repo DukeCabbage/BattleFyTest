@@ -1,0 +1,19 @@
+<h1>LoL Look Up</h1>
+
+{{#each this}}
+	<div class="gameBlock row">
+		<div class="col-xs-4 col-xs-offset-2"> 
+			<p>GameId : {{gameId}}</p>
+			<p>Date : {{createDate}}</p>
+			<p>Champion Name : {{championName}}</p>
+		</div>
+		<div class="col-xs-4">
+			<p>Damage Taken : {{totalDamageTaken}}</p>
+			<p>Damage Done : {{totalDamageDealtToChampions}}</p>
+			<p>Killing Sprees : {{killingSprees}}</p>
+		</div>
+		<div class="col-xs-2"></div>
+	</div>
+{{/each}}
+
+<button id="backBtn" type="button">Back</button>

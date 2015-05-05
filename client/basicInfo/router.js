@@ -5,7 +5,6 @@ var Marionette 	= require('backbone.marionette');
 
 module.exports = Router = Marionette.AppRouter.extend({
     appRoutes: {
-        ''  : 'indexPage',
-        'index' : 'indexPage'
+        ''  : 'indexPage'
     }
 });

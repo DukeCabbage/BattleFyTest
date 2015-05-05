@@ -86,9 +86,6 @@ exports.requestForRecentGames = function(summonerId, res, callback){
 var recentGamesRequest = function(requestUrl, callback, res){
 	console.log('Sending request: ' + requestUrl);
 	request(requestUrl, function(error, response, body){
-		// console.log(error);
-		// console.log(response);
-		// console.log(body);
 
 		if (!error && response.statusCode == 200) {
 			var recentGamesRaw = JSON.parse(body);

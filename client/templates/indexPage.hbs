@@ -1,18 +1,8 @@
 <h1>LoL Look Up</h1>
 
-
-{{# if databaseId}}
-	<div>
-		<p>Id : {{summonerId}}</p>
-		<p>Name : {{summonerName}}</p>
-		<p>Level : {{summonerLevel}}</p>
-		<button id="backBtn" type="button">Back</button>
-	</div>
-{{else}}
-	<div>
-		<p>Enter name:</p>
-		<input id="inputPlayerName" type="text">
-
-		<button id="submitInquiryBtn" type="button">Search</button>
-	</div>
-{{/if}}
+<div class="basic">
+	<p>Enter name:</p>
+	<input id="inputPlayerName" type="text">
+	<button id="submitInquiryBtn" type="button">Basic</button>
+	<button id="recentGamesBtn" type="button">RecentGames</button>
+</div>

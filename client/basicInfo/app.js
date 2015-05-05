@@ -8,6 +8,7 @@ var Controller  = require('./controller');
 var Router      = require('./router');
 
 var BasicInfoModel = require('./models/basicInfoModel');
+var RecentGamesCollection = require('./models/RecentGamesCollection');
 
 module.exports = App = function App() {};
 
@@ -21,6 +22,7 @@ App.prototype.start = function(){
         App.data = {};
         
         App.data.model = new BasicInfoModel();
+        App.data.collection = new RecentGamesCollection();
         App.core.vent.trigger('app:start');
     });
 
@@ -39,18 +41,6 @@ App.prototype.start = function(){
 
     App.core.vent.bind('app:log', function(msg) {
         console.log(msg);
-    });
-
-    App.core.vent.bind('nav:chooseQuantity', function() {
-        Backbone.history.navigate('')
-    });
-
-    App.core.vent.bind('nav:chooseMethod', function() {
-        Backbone.history.navigate('method');
-    });
-
-    App.core.vent.bind('nav:delivery', function(option) {
-        Backbone.history.navigate('delivery');
     });
 
     App.core.start();

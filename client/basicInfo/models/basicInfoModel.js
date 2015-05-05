@@ -12,12 +12,12 @@ module.exports = BasicInfo = Backbone.Model.extend({
     	profileIconId : undefined
     },
 
-    parseMessage : function(obj){
-    	this.set('databaseId', obj['_id']);
-    	this.set('summonerName', obj['summonerName']);
-    	this.set('summonerId', obj['summonerId']);
-    	this.set('summonerLevel', obj['summonerLevel']);
-    	this.set('profileIconId', obj['profileIconId']);
+    parseResponse: function(response){
+    	this.set('databaseId', response['_id']);
+    	this.set('summonerName', response['summonerName']);
+    	this.set('summonerId', response['summonerId']);
+    	this.set('summonerLevel', response['summonerLevel']);
+    	this.set('profileIconId', response['profileIconId']);
     },
 
     printAttribute: function(){
