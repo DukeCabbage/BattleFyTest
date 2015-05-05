@@ -1,4 +1,6 @@
 var request = require("request");
+var rateLimit = require("./myRateLimit").createQueue({interval: 110});
+
 var apiKey = '?api_key=d188a667-b0ca-4c80-9110-8bfcbbf6d82b';
 
 exports.requestForSummoner = function(method, value, callback) {
@@ -6,18 +8,21 @@ exports.requestForSummoner = function(method, value, callback) {
 		case 'name':
 			var requestStr = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/';
 			var requestUrl = requestStr+value+apiKey;
-			console.log('Sending request: ' + requestUrl);
 		break;
 		case 'id' :
 			var requestStr = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/';
 			var requestUrl = requestStr+value+apiKey;
-			console.log('Sending request: ' + requestUrl);
 		break;
 		default:
 			callback();
 			return;
 	}
 
+	rateLimit.add(summonerRequest, requestUrl, callback, undefined);
+};
+
+var summonerRequest = function(requestUrl, callback){
+	console.log('Sending request: ' + requestUrl);
 	request(requestUrl, function(error, response, body){
 		if (!error && response.statusCode == 200) {
 			var playerInfo = JSON.parse(body);
@@ -33,6 +38,7 @@ exports.requestForSummoner = function(method, value, callback) {
 
 			callback(playerObj);
 		}else{
+			console.log(response.statusCode);
 			callback();
 		}
 	});
@@ -43,13 +49,17 @@ exports.requestForChampion = function(method, value, callback) {
 		case 'id' :
 			var requestStr = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/';
 			var requestUrl = requestStr+value+apiKey;
-			console.log('Sending request: ' + requestUrl);
 		break;
 		default:
 			callback();
 			return;
 	}
 
+	rateLimit.add(championRequest, requestUrl, callback, undefined);
+};
+
+var championRequest = function(requestUrl, callback){
+	console.log('Sending request: ' + requestUrl);
 	request(requestUrl, function(error, response, body){
 		if (!error && response.statusCode == 200) {
 			var championInfo = JSON.parse(body);
@@ -61,6 +71,7 @@ exports.requestForChampion = function(method, value, callback) {
 
 			callback(championObj);
 		}else{
+			console.log(response.statusCode);
 			callback();
 		}
 	});
@@ -69,9 +80,16 @@ exports.requestForChampion = function(method, value, callback) {
 exports.requestForRecentGames = function(summonerId, res, callback){
 	var requestStr = 'https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/';
 	var requestUrl = requestStr+summonerId+'/recent'+apiKey;
-	console.log('Sending request: ' + requestUrl);
+	rateLimit.add(recentGamesRequest, requestUrl, callback, res);
+};
 
+var recentGamesRequest = function(requestUrl, callback, res){
+	console.log('Sending request: ' + requestUrl);
 	request(requestUrl, function(error, response, body){
+		// console.log(error);
+		// console.log(response);
+		// console.log(body);
+
 		if (!error && response.statusCode == 200) {
 			var recentGamesRaw = JSON.parse(body);
 			if(recentGamesRaw['summonerId'] != summonerId){
@@ -81,6 +99,7 @@ exports.requestForRecentGames = function(summonerId, res, callback){
 				callback(res, recentGamesRaw['games']);
 			}			
 		}else{
+			console.log(response.statusCode);
 			callback(res);
 		}
 	});
