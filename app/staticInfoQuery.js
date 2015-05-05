@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var request = require("request");
 var requestMaker = require('./requestMaker');
 var staticInfoDB = require('./staticInfoDB');
 

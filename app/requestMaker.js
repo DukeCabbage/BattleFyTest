@@ -65,3 +65,23 @@ exports.requestForChampion = function(method, value, callback) {
 		}
 	});
 };
+
+exports.requestForRecentGames = function(summonerId, res, callback){
+	var requestStr = 'https://na.api.pvp.net/api/lol/na/v1.3/game/by-summoner/';
+	var requestUrl = requestStr+summonerId+'/recent'+apiKey;
+	console.log('Sending request: ' + requestUrl);
+
+	request(requestUrl, function(error, response, body){
+		if (!error && response.statusCode == 200) {
+			var recentGamesRaw = JSON.parse(body);
+			if(recentGamesRaw['summonerId'] != summonerId){
+				console.log('Error: recent games summonerId not matching');
+				callback(res);
+			}else{
+				callback(res, recentGamesRaw['games']);
+			}			
+		}else{
+			callback(res);
+		}
+	});
+};
