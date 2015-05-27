@@ -8,7 +8,7 @@ var Controller  = require('./controller');
 var Router      = require('./router');
 
 var BasicInfoModel = require('./models/basicInfoModel');
-var RecentGamesCollection = require('./models/RecentGamesCollection');
+var RecentGamesCollection = require('./models/recentGamesCollection');
 
 module.exports = App = function App() {};
 
